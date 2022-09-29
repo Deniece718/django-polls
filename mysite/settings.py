@@ -26,6 +26,7 @@ SECRET_KEY = 'django-insecure-_avxu6%b*v4^%2ze$2e3gtktpw)z8de!oq0+((3kd2(6b_nddt
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
+CSRF_TRUSTED_ORIGINS = ['https://guarded-garden-99965.herokuapp.com','https://127.0.0.1']
 
 
 # Application definition
