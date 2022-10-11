@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
+from rest_framework import serializers, viewsets
 
 from .models import Choice, Question
 
@@ -54,3 +55,23 @@ def vote(request, question_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
+
+class QuestionSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Question
+        fields = ['id', 'question_text', 'pub_date']
+
+class ChoiceSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Choice
+        fields = ['id', 'question_id', 'choice_text', 'votes']
+
+class QuestionViewSet(viewsets.GenericViewSet):
+    queryset = Question.objects.all()
+    serializer_class = QuestionSerializer
+
+class ChoiceViewSet(viewsets.ModelViewSet):
+    queryset = Choice.objects.all()
+    serializer_class = ChoiceSerializer
+
